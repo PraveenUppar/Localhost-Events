@@ -15,6 +15,8 @@ Why: Ticketing data is highly relational (User -> Orders -> Tickets -> Events). 
 ORM: Prisma
 
 Why: Writing raw SQL is error-prone. These tools give you type-safe database access.
+Run Prisma Studio (a visual database viewer):
+Bash - npx prisma studio
 
 Styling: Tailwind CSS + Shadcn/UI
 

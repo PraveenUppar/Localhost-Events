@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User schema
+model User {
+  id      String   @id @default(uuid())
+  email   String   @unique
+  name    String?
+  role    UserRole @default(USER) // enum for simple role management
+
+  events  Event[]  @relation("OrganizerEvents") // Events this user organized or Event History
+  orders  Order[]  // Orders this user placed or Order History
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Event schema
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  date        DateTime
+  location    String
+  imageUrl    String?
+  
+  // Organization
+  organizerId String
+  organizer   User   @relation("OrganizerEvents", fields: [organizerId], references: [id])
+
+  // Relationships
+  ticketVariants TicketVariant[]
+  tickets        Ticket[] // Link to actual issued tickets for easy lookup
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// TicketVariant schema
+model TicketVariant {
+  id          String @id @default(uuid())
+  name        String // e.g., "Early Bird" or "VIP"
+  description String?
+  
+  price       Decimal @db.Decimal(10, 2) // Used Decimal for money
+  totalStock  Int
+  
+  eventId     String
+  event       Event  @relation(fields: [eventId], references: [id])
+
+  tickets     Ticket[] // Tickets generated from this variant
+}
+
+// Order/Booking schema
+model Order {
+  id              String      @id @default(uuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  
+  status          OrderStatus @default(PENDING)
+  totalAmount     Decimal     @db.Decimal(10, 2)
+  
+  // Stripe info (needed for later)
+  stripePaymentId String? 
+  
+  tickets         Ticket[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Ticket schema
+model Ticket {
+  id              String       @id @default(uuid())
+  
+  status          TicketStatus @default(VALID)
+  
+  orderId         String
+  order           Order        @relation(fields: [orderId], references: [id])
+  
+  ticketVariantId String
+  ticketVariant   TicketVariant @relation(fields: [ticketVariantId], references: [id])
+  
+  eventId         String
+  event           Event        @relation(fields: [eventId], references: [id])
+  
+  qrCodeToken     String       @unique @default(uuid()) // The secret string in the QR code
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+
+// Enums for data consistency 
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum TicketStatus {
+  VALID
+  USED
+  CANCELLED
+}
