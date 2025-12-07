@@ -2,6 +2,7 @@
 import { getEventById } from "@/app/actions/getEventById";
 import { notFound } from "next/navigation";
 import { Calendar, MapPin, User } from "lucide-react";
+import { createCheckoutSession } from "@/app/actions/createCheckoutSession";
 
 // This is how we access the dynamic ID in Next.js 15 (Server Component)
 interface PageProps {
@@ -94,17 +95,18 @@ export default async function EventPage({ params }: PageProps) {
 
               {/* The Action Button */}
               {/* We will hook this up to Stripe next */}
-              <form action={/* We will add purchase action here later */ ""}>
-                <input
-                  type="hidden"
-                  name="ticketVariantId"
-                  value={ticket?.id}
-                />
+              <form
+                action={async () => {
+                  "use server";
+                  // We pass the ID to the action
+                  await createCheckoutSession(ticket.id);
+                }}
+              >
                 <button
                   type="submit"
                   className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex justify-center items-center gap-2"
                 >
-                  Buy Ticket
+                  Buy Ticket {Number(ticket.price) === 0 && "(Free)"}
                 </button>
               </form>
 
