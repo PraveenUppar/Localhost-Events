@@ -1,9 +1,7 @@
 // app/events/[id]/page.tsx
 import { getEventById } from "@/app/actions/getEventById";
 import { notFound } from "next/navigation";
-import { Calendar, MapPin, User } from "lucide-react";
-import { createCheckoutSession } from "@/app/actions/createCheckoutSession";
-
+import { Calendar, MapPin, User } from "lucide-react"; // Ensure you have lucide-react installed or use text icons
 // This is how we access the dynamic ID in Next.js 15 (Server Component)
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -98,8 +96,6 @@ export default async function EventPage({ params }: PageProps) {
               <form
                 action={async () => {
                   "use server";
-                  // We pass the ID to the action
-                  await createCheckoutSession(ticket.id);
                 }}
               >
                 <button
