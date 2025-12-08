@@ -65,7 +65,7 @@ model Order {
   status          OrderStatus @default(PENDING)
   totalAmount     Decimal     @db.Decimal(10, 2)
   
-  stripePaymentId String?     
+  stripePaymentId String?     @unique
   
   tickets         Ticket[]
 
@@ -88,8 +88,7 @@ model Ticket {
   eventId         String
   event           Event        @relation(fields: [eventId], references: [id])
   
-  qrCodeToken     String       @unique @default(uuid()) // The secret string in the QR code
-
+  qrCodeToken     String       @unique @default(uuid())
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

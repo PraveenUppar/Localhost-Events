@@ -3,6 +3,7 @@ import { getEventById } from "@/app/actions/getEventById";
 import { notFound } from "next/navigation";
 import { Calendar, MapPin, User } from "lucide-react"; // Ensure you have lucide-react installed or use text icons
 // This is how we access the dynamic ID in Next.js 15 (Server Component)
+import { createCheckoutSession } from "@/app/actions/createCheckoutSession";
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -96,13 +97,17 @@ export default async function EventPage({ params }: PageProps) {
               <form
                 action={async () => {
                   "use server";
+                  // This triggers the Stripe Session
+                  await createCheckoutSession(ticket.id);
                 }}
               >
                 <button
                   type="submit"
-                  className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex justify-center items-center gap-2"
+                  // Disable if no ticket exists to prevent errors
+                  disabled={!ticket}
+                  className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Buy Ticket {Number(ticket.price) === 0 && "(Free)"}
+                  Buy Ticket {ticket && Number(ticket.price) === 0 && "(Free)"}
                 </button>
               </form>
 
