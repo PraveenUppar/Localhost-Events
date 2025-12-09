@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Calendar, MapPin, User } from "lucide-react"; // Ensure you have lucide-react installed or use text icons
 // This is how we access the dynamic ID in Next.js 15 (Server Component)
 import { createCheckoutSession } from "@/app/actions/createCheckoutSession";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -94,22 +95,35 @@ export default async function EventPage({ params }: PageProps) {
 
               {/* The Action Button */}
               {/* We will hook this up to Stripe next */}
-              <form
-                action={async () => {
-                  "use server";
-                  // This triggers the Stripe Session
-                  await createCheckoutSession(ticket.id);
-                }}
-              >
-                <button
-                  type="submit"
-                  // Disable if no ticket exists to prevent errors
-                  disabled={!ticket}
-                  className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Buy Ticket {ticket && Number(ticket.price) === 0 && "(Free)"}
-                </button>
-              </form>
+              <div className="mt-6">
+                {/* OPTION 1: User is Logged In -> Show Buy Button */}
+                <SignedIn>
+                  <form
+                    action={async () => {
+                      "use server";
+                      await createCheckoutSession(ticket.id);
+                    }}
+                  >
+                    <button
+                      type="submit"
+                      disabled={!ticket}
+                      className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Buy Ticket{" "}
+                      {ticket && Number(ticket.price) === 0 && "(Free)"}
+                    </button>
+                  </form>
+                </SignedIn>
+
+                {/* OPTION 2: User is Logged Out -> Show Sign In Button */}
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <button className="w-full bg-gray-100 text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors border border-gray-200">
+                      Sign in to Buy Ticket
+                    </button>
+                  </SignInButton>
+                </SignedOut>
+              </div>
 
               <p className="text-xs text-center text-gray-400 mt-4">
                 Powered by Stripe • Secure Checkout
