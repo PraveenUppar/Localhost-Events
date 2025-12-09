@@ -12,11 +12,17 @@ export default function Header() {
 
         <div className="flex items-center gap-4">
           <SignedIn>
-            <Link
+            {/* <Link
               href="/events/create"
               className="bg-black text-white px-4 py-2 rounded text-sm"
             >
               Create Event
+            </Link> */}
+            <Link
+              href="/account"
+              className="bg-black text-white px-4 py-2 rounded text-sm"
+            >
+              My Account
             </Link>
             <UserButton />
           </SignedIn>
