@@ -116,17 +116,22 @@ Follow these steps to run the application locally:
 
 Clone the repository
 
+```
 Bash
 
 git clone [https://github.com/your-username/event-ticketing-platform.git](https://github.com/your-username/event-ticketing-platform.git)
 cd event-ticketing-platform
 Install dependencies
+```
 
+```
 Bash
 
 npm install
 Set up the database Ensure your .env file is configured, then sync the schema:
+```
 
+```
 Bash
 
 npx prisma db push
@@ -136,7 +141,10 @@ SQL
 
 ALTER TABLE "TicketVariant" ADD CONSTRAINT "stock_non_negative" CHECK ("totalStock" >= 0);
 Run the development server
+```
 
+```
 Bash
 
 npm run dev
+```
