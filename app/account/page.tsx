@@ -144,10 +144,11 @@ export default async function AccountPage() {
                     </div>
                     <div className="text-right">
                       <Link
-                        href="/tickets"
-                        className="text-sm text-blue-600 hover:underline"
+                        href={`/tickets/${ticket.id}`}
+                        className="text-sm text-blue-600 hover:underline flex items-center gap-1"
                       >
-                        View QR Code
+                        <Ticket className="w-4 h-4" />
+                        View Ticket
                       </Link>
                     </div>
                   </div>
