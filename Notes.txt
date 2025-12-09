@@ -1,0 +1,16 @@
+How to talk about this project in Interviews
+When a recruiter or Engineering Manager asks, "Tell me about a challenging project," do not just say "I built a ticketing app."
+
+Use these "Senior" talking points based on what you built:
+
+1. On Database Integrity:
+
+"I handled high-concurrency ticket sales by implementing Optimistic Concurrency Control and Atomic Transactions in PostgreSQL. I used SQL constraints to ensure inventory never drops below zero, preventing race conditions where two users buy the last ticket simultaneously."
+
+2. On Scalability:
+
+"To ensure the homepage loads instantly even with thousands of events, I implemented Offset-based Pagination using Prisma's take and skip, and managed the state via URL parameters to keep the application shareable and SEO-friendly."
+
+3. On Architecture:
+
+"I moved away from webhooks for the critical payment path and implemented a Verification Pattern. This reduced latency and eliminated failures caused by local network tunnels or missed webhook events."
