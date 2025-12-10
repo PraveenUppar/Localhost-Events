@@ -119,7 +119,7 @@ export default async function EventPage({ params }: PageProps) {
           <div className="lg:col-span-1">
             <div className="sticky top-24">
               <EventTicketCard
-                ticketVariants={event.ticketVariants.map((variant) => ({
+                ticketVariants={event.ticketVariants.map((variant: any) => ({
                   ...variant,
                   price: Number(variant.price),
                 }))}
