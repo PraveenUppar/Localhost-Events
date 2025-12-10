@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Default to Dark Mode variables immediately for that consistent vibe */
+  --background: #030712; /* Richer dark (Gray 950) instead of flat black */
+  --foreground: #f8fafc; /* Slate 50 */
+
+  /* "Tech" Accents - used for buttons, glows, and active states */
+  --primary: #3b82f6; /* Electric Blue */
+  --primary-glow: rgba(59, 130, 246, 0.5);
+
+  /* Secondary accents for borders/subtle UI */
+  --border: #1e293b; /* Slate 800 */
 }
 
+/* Ensure the theme maps these variables */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- THE SECRET SAUCE: Tech Grid Background --- */
+/* This creates a subtle coordinate grid behind your app */
+.bg-tech-grid {
+  background-size: 50px 50px;
+  background-image: linear-gradient(to right, #1e293b 1px, transparent 1px),
+    linear-gradient(to bottom, #1e293b 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
