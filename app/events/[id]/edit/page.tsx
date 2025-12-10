@@ -1,4 +1,6 @@
 // app/events/[id]/edit/page.tsx
+
+export const dynamic = "force-dynamic";
 import { getEventForEdit } from "@/app/actions/getEventForEdit";
 import { updateEvent } from "@/app/actions/updateEvent";
 import { notFound, redirect } from "next/navigation";

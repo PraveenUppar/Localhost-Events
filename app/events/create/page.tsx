@@ -1,6 +1,7 @@
 // app/events/create/page.tsx
 "use client";
 
+// export const dynamic = "force-dynamic";
 import { createEvent } from "../../actions/createEvent";
 import { useState } from "react";
 import {
