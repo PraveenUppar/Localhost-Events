@@ -1,5 +1,4 @@
 // app/tickets/[id]/page.tsx
-export const dynamic = "force-dynamic";
 import { getTicketById } from "@/app/actions/getTicketById";
 import { notFound } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";

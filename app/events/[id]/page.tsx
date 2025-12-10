@@ -1,5 +1,4 @@
 // app/events/[id]/page.tsx
-export const dynamic = "force-dynamic";
 import { getEventById } from "@/app/actions/getEventById";
 import { notFound } from "next/navigation";
 import { Calendar, MapPin, User, ArrowLeft } from "lucide-react";

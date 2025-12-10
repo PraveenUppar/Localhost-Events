@@ -1,5 +1,4 @@
 // app/account/page.tsx
-export const dynamic = "force-dynamic";
 import { getTickets } from "@/app/actions/getTickets";
 import { getOrganizerEvents } from "@/app/actions/getOrganizerEvents";
 import { auth } from "@clerk/nextjs/server";
