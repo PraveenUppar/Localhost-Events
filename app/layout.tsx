@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server"; // <--- 1. ADD THIS IMPORT
+import { currentUser } from "@clerk/nextjs/server";
 import "./globals.css";
 import Header from "@/components/Header";
 import { syncUser } from "@/app/actions/syncUser";
@@ -22,29 +22,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 2. MAKE THIS FUNCTION ASYNC
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 3. ADD THIS SYNC LOGIC
   const user = await currentUser();
   if (user) {
-    await syncUser(); // This creates the user in DB if they are missing
+    await syncUser();
   }
 
   return (
     <ClerkProvider>
-      <html lang="en" className="dark">
+      <html lang="en" className="dark h-full">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col relative`}
+          // 1. Added h-full and removed 'relative' to prevent layout shifting
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden`}
         >
           {/* Background Grid Layer */}
           <div className="fixed inset-0 z-[-1] bg-tech-grid opacity-[0.15] pointer-events-none" />
 
-          {/* Gradient Orb */}
-          <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 blur-[120px] rounded-full pointer-events-none z-[-1]" />
+          {/* 2. FIXED: Background Gradient Orb 
+             Added 'w-full max-w-[600px]' so it shrinks on mobile instead of forcing scroll
+          */}
+          <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[300px] md:h-[600px] bg-primary/20 blur-[120px] rounded-full pointer-events-none z-[-1]" />
 
           <Header />
 

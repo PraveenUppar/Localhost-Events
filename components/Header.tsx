@@ -12,7 +12,7 @@ export default function Header() {
           <div className="h-8 w-8 shrink-0 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all duration-300" />
 
           {/* Text Logo (Hidden on very small screens, visible on sm+) */}
-          <span className="hidden sm:block text-lg font-bold tracking-tight text-white font-mono group-hover:text-blue-400 transition-colors">
+          <span className=" text-lg font-bold tracking-tight text-white font-mono group-hover:text-blue-400 transition-colors">
             Local<span className="text-blue-500">Host</span>Events
           </span>
         </Link>
