@@ -37,7 +37,7 @@ export async function verifyPurchase(sessionId: string) {
     }
 
     // --- TRANSACTION START ---
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: any) => {
       // 1. Upsert User
       await tx.user.upsert({
         where: { id: userId },
