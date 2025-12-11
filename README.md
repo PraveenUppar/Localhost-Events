@@ -1,4 +1,4 @@
-# Local Host Events: Full-Stack Ticketing Platform
+# Local Host Events
 
 A production-ready, scalable event booking platform built with modern technologies to handle real-time ticket sales, secure payments, and digital gate management. This project specifically solves challenges around concurrency control for ticket inventory, robust authentication flows, and reliable payment verification.
 
